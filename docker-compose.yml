@@ -1,0 +1,21 @@
+version: "3.9"
+name: v2ray
+services:
+  v2ray:
+    build: 
+      context: .
+      args:
+        # 指定release版本为 v5.11.0
+        - TAG=v5.11.0
+    image: v2ray-core:latest
+    container_name: v2ray
+    stdin_open: true
+    tty: true
+    restart: always
+    volumes:
+      - ./volume/config.json:/etc/v2ray/config.json
+      # 下面为可选
+      - ./volume/geo_dat/:/usr/local/share/v2ray/
+    command: run -c /etc/v2ray/config.json
+    # 可选择挂载在宿主机
+    network_mode: host
